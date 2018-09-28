@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/api/annotations.proto";
+
+message EchoRequest {
+    string message = 1;
+}
+
+message EchoResponse {
+    string message = 1;
+}
+
+message MessagesRequest {
+    repeated string messages = 1;
+}
+
+message MessagesResponse {
+    bool success = 1;
+    repeated string messages = 2;
+}
+
+service MessagesService {
+    rpc GetMessages(MessagesRequest) returns (MessagesResponse) {
+        option (google.api.http) = {
+            get: "/messages"
+        };
+    }
+
+    rpc PostMessages(MessagesRequest) returns (MessagesResponse) {
+        option (google.api.http) = {
+            post: "/messages"
+        };
+    }
+
+    rpc Echo(EchoRequest) returns (EchoResponse) {
+        option (google.api.http) = {
+            get: "/echo"
+        };
+    }
+}
