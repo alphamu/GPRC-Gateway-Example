@@ -13,12 +13,12 @@ func WriteMessageToDb(messages []string, messageFrom, messageTo string) (sql.Res
 		stmtIn, err := PrepareInsert(db, "messages", []string{"message", "message_from", "message_to"})
 		defer stmtIn.Close()
 		if err != nil {
-			panic(err.Error())
+			return nil, err
 		}
 
 
 		for i := 0; i < len(messages); i++ {
-			stmtIn.Exec(messages, messageFrom, messageTo)
+			stmtIn.Exec(messages[i], messageFrom, messageTo)
 			if err != nil {
 				return nil, err
 			}
